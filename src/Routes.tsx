@@ -1,12 +1,9 @@
 import {Text, View} from 'react-native';
 import React from 'react';
+import PublicRoutes from './routes/PublicRoutes';
 
 const Routes = () => {
-  return (
-    <View>
-      <Text>Routes</Text>
-    </View>
-  );
+  return <PublicRoutes />;
 };
 
 export default Routes;

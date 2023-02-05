@@ -1,15 +1,17 @@
 import React from 'react';
-import {NativeBaseProvider, Text} from 'native-base';
+import {NativeBaseProvider, StatusBar, Text} from 'native-base';
 import Routes from './src/Routes';
 import {NavigationContainer} from '@react-navigation/native';
+import CustomTheme from './src/styles';
 
 const App = () => {
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      <NativeBaseProvider theme={CustomTheme}>
+        <StatusBar backgroundColor={'red'} />
         <Routes />
-      </NavigationContainer>
-    </NativeBaseProvider>
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 };
 
