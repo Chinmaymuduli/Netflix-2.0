@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Button,
@@ -9,6 +9,7 @@ import {
   Row,
   ScrollView,
   Text,
+  useDisclose,
   VStack,
 } from 'native-base';
 import {useMovieQuery} from '../../services';
@@ -17,11 +18,20 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {IMAGES} from '../../assets';
-import {PopularTvShows, UpcomingMovie} from '../../components';
+import {
+  AiringTv,
+  CustomActionSheet,
+  PopularTvShows,
+  SliderMovie,
+  TopRatedTv,
+  UpcomingMovie,
+} from '../../components';
 
 const HomeScreen = () => {
+  const [showId, setShowId] = useState('');
   const {data, isFetching, error, isError} = useMovieQuery();
   // console.log(data?.results);
+  const {isOpen, onOpen, onClose} = useDisclose();
   return (
     <Box flex={1} bg={'black'}>
       <ScrollView>
@@ -112,7 +122,11 @@ const HomeScreen = () => {
               showsHorizontalScrollIndicator={false}
               data={data?.results}
               renderItem={({item}: any) => (
-                <Pressable px={2}>
+                <Pressable
+                  px={2}
+                  onPress={() => {
+                    onOpen(), setShowId(item?.id);
+                  }}>
                   <Row>
                     <Image
                       source={{
@@ -132,11 +146,18 @@ const HomeScreen = () => {
             />
           </Box>
         </Box>
-        {/* Upcoming Movie */}
+        {/* Top Rated Movie */}
         <UpcomingMovie />
         {/* Latest Movie */}
         <PopularTvShows />
+        {/* Movie Carousel */}
+        <SliderMovie />
+        {/* Top rated Tv */}
+        <TopRatedTv />
+        {/* New TV */}
+        <AiringTv />
       </ScrollView>
+      <CustomActionSheet onClose={onClose} isOpen={isOpen} Id={showId} />
     </Box>
   );
 };

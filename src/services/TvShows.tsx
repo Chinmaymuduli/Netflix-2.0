@@ -17,6 +17,16 @@ export const TvShows = createApi({
         url: `tv/popular?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
+    TopRated: builder.query<MovieApiResponse, void>({
+      query: () => ({
+        url: `tv/top_rated?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
+    AiringToday: builder.query<MovieApiResponse, void>({
+      query: () => ({
+        url: `tv/airing_today?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
   }),
 });
-export const {useTvShowQuery} = TvShows;
+export const {useTvShowQuery, useTopRatedQuery, useAiringTodayQuery} = TvShows;

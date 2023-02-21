@@ -24,7 +24,7 @@ export const MovieApi = createApi({
     }),
     NewRelease: builder.query<MovieApiResponse, void>({
       query: () => ({
-        url: `movie/latest?api_key=${MOVIE_API_KEYS}&language=en-US`,
+        url: `trending/all/week?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
   }),

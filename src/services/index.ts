@@ -4,7 +4,12 @@ import {
   useUpcomingQuery,
   useNewReleaseQuery,
 } from './MovieApi';
-import {TvShows, useTvShowQuery} from './Tvshows';
+import {
+  TvShows,
+  useTvShowQuery,
+  useTopRatedQuery,
+  useAiringTodayQuery,
+} from './TvShows';
 
 export {
   MovieApi,
@@ -13,4 +18,6 @@ export {
   useNewReleaseQuery,
   TvShows,
   useTvShowQuery,
+  useTopRatedQuery,
+  useAiringTodayQuery,
 };
