@@ -11,7 +11,7 @@ const App = () => {
     <Provider store={store}>
       <NavigationContainer>
         <NativeBaseProvider theme={CustomTheme}>
-          <StatusBar backgroundColor={'red'} />
+          {/* <StatusBar backgroundColor={'red'} /> */}
           <Routes />
         </NativeBaseProvider>
       </NavigationContainer>

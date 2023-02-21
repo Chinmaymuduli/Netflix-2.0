@@ -1,12 +1,13 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {MovieApi} from '../services';
+import {MovieApi, TvShows} from '../services';
 
 export const store = configureStore({
   reducer: {
     [MovieApi.reducerPath]: MovieApi.reducer,
+    [TvShows.reducerPath]: TvShows.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([MovieApi.middleware]),
+    getDefaultMiddleware().concat([MovieApi.middleware, TvShows.middleware]),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

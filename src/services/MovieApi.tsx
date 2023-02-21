@@ -14,9 +14,19 @@ export const MovieApi = createApi({
   endpoints: builder => ({
     Movie: builder.query<MovieApiResponse, void>({
       query: () => ({
-        url: `now_playing?api_key=${MOVIE_API_KEYS}`,
+        url: `movie/now_playing?api_key=${MOVIE_API_KEYS}`,
+      }),
+    }),
+    Upcoming: builder.query<MovieApiResponse, void>({
+      query: () => ({
+        url: `movie/top_rated?api_key=${MOVIE_API_KEYS}`,
+      }),
+    }),
+    NewRelease: builder.query<MovieApiResponse, void>({
+      query: () => ({
+        url: `movie/latest?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
   }),
 });
-export const {useMovieQuery} = MovieApi;
+export const {useMovieQuery, useUpcomingQuery, useNewReleaseQuery} = MovieApi;
