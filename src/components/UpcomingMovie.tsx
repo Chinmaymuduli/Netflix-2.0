@@ -27,7 +27,11 @@ const UpcomingMovie = () => {
         showsHorizontalScrollIndicator={false}
         data={data?.results}
         renderItem={({item}: any) => (
-          <Pressable px={2} onPress={() => setShowId(item?.id)}>
+          <Pressable
+            px={2}
+            onPress={() => {
+              setShowId(item?.id), onOpen();
+            }}>
             <Row>
               <Image
                 source={{

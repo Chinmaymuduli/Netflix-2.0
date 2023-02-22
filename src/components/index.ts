@@ -4,3 +4,4 @@ export {default as TopRatedTv} from './TopRatedTv';
 export {default as SliderMovie} from './SliderMovie';
 export {default as AiringTv} from './AiringTv';
 export {default as CustomActionSheet} from './CustomActionSheet';
+export {default as TvActionSheet} from './TvActionSheet';

@@ -1,10 +1,22 @@
-import React from 'react';
-import {Box, FlatList, Heading, Image, Pressable, Row, Text} from 'native-base';
+import React, {useState} from 'react';
+import {
+  Box,
+  FlatList,
+  Heading,
+  Image,
+  Pressable,
+  Row,
+  Text,
+  useDisclose,
+} from 'native-base';
 import {useAiringTodayQuery, useTopRatedQuery} from '../services';
+import TvActionSheet from './TvActionSheet';
 
 const AiringTv = () => {
   const {data, isFetching, error, isError} = useAiringTodayQuery();
-  console.log(data);
+  // console.log(data);
+  const [showId, setShowId] = useState('');
+  const {isOpen, onOpen, onClose} = useDisclose();
   return (
     <Box pb={4}>
       <Heading size={'sm'} px={3} py={6} color={'white'}>
@@ -15,7 +27,11 @@ const AiringTv = () => {
         showsHorizontalScrollIndicator={false}
         data={data?.results}
         renderItem={({item}: any) => (
-          <Pressable px={2}>
+          <Pressable
+            px={2}
+            onPress={() => {
+              setShowId(item?.id), onOpen();
+            }}>
             <Row>
               <Image
                 source={{
@@ -32,6 +48,7 @@ const AiringTv = () => {
           </Pressable>
         )}
       />
+      <TvActionSheet onClose={onClose} isOpen={isOpen} Id={showId} />
     </Box>
   );
 };

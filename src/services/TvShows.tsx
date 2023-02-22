@@ -27,6 +27,16 @@ export const TvShows = createApi({
         url: `tv/airing_today?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
+    TvDetails: builder.query<any, {tv_id: any}>({
+      query: ({tv_id}) => ({
+        url: `tv/${tv_id}?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
   }),
 });
-export const {useTvShowQuery, useTopRatedQuery, useAiringTodayQuery} = TvShows;
+export const {
+  useTvShowQuery,
+  useTopRatedQuery,
+  useAiringTodayQuery,
+  useTvDetailsQuery,
+} = TvShows;

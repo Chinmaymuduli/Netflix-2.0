@@ -29,9 +29,15 @@ import {
 
 const HomeScreen = () => {
   const [showId, setShowId] = useState();
+  const [posterId, setPosterId] = useState();
   const {data, isFetching, error, isError} = useMovieQuery();
   // console.log({data});
   const {isOpen, onOpen, onClose} = useDisclose();
+  const {
+    isOpen: posterOpen,
+    onOpen: posterOnOpen,
+    onClose: posterOnClose,
+  } = useDisclose();
   return (
     <Box flex={1} bg={'black'}>
       <ScrollView>
@@ -99,16 +105,21 @@ const HomeScreen = () => {
                   </Text>
                 </Row>
               </Pressable>
-              <VStack alignItems={'center'}>
-                <Ionicons
-                  name="information-circle-outline"
-                  size={20}
-                  color={'white'}
-                />
-                <Text color={'white'} bold>
-                  Info
-                </Text>
-              </VStack>
+              <Pressable
+                onPress={() => {
+                  posterOnOpen(), setPosterId(data?.results[0]?.id);
+                }}>
+                <VStack alignItems={'center'}>
+                  <Ionicons
+                    name="information-circle-outline"
+                    size={20}
+                    color={'white'}
+                  />
+                  <Text color={'white'} bold>
+                    Info
+                  </Text>
+                </VStack>
+              </Pressable>
             </Row>
           </Box>
         </Box>
@@ -158,6 +169,11 @@ const HomeScreen = () => {
         <AiringTv />
       </ScrollView>
       <CustomActionSheet onClose={onClose} isOpen={isOpen} Id={showId} />
+      <CustomActionSheet
+        onClose={posterOnClose}
+        isOpen={posterOpen}
+        Id={posterId}
+      />
     </Box>
   );
 };

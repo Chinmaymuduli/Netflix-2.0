@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import {useMovieDetailsQuery} from '../services';
+import {useMovieDetailsQuery, useTvDetailsQuery} from '../services';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -19,10 +19,10 @@ type Action_Type = {
   Id: any;
 };
 
-const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
-  const {data, isFetching, error} = useMovieDetailsQuery({movie_id: Id});
+const TvActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
+  const {data, isFetching, error} = useTvDetailsQuery({tv_id: Id});
   const [finalTime, setFinalTime] = useState<any>();
-  console.log({data});
+
   useEffect(() => {
     const hours = Math.floor(data?.runtime / 60);
     const minutes = data?.runtime % 60;
@@ -50,12 +50,12 @@ const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
             <VStack>
               <Row justifyContent={'space-between'}>
                 <Text w={'48'} bold noOfLines={2} color={'white'}>
-                  {data?.original_title}
+                  {data?.name}
                 </Text>
               </Row>
               <Row space={4} mt={1}>
                 <Text fontWeight={'medium'} color={'gray.300'} fontSize={13}>
-                  {new Date(data?.release_date).getFullYear()}
+                  {new Date(data?.last_air_date).getFullYear()}
                 </Text>
                 <Row space={2}>
                   <Text fontWeight={'medium'} color={'gray.300'} fontSize={13}>
@@ -66,7 +66,7 @@ const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
                   </Text>
                 </Row>
                 <Text fontWeight={'medium'} color={'gray.300'} fontSize={13}>
-                  {finalTime}
+                  {data?.seasons?.length} seasons
                 </Text>
               </Row>
               <Text
@@ -161,4 +161,4 @@ const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
   );
 };
 
-export default CustomActionSheet;
+export default TvActionSheet;
