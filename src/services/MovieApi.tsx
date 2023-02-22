@@ -27,6 +27,16 @@ export const MovieApi = createApi({
         url: `trending/all/week?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
+    movieDetails: builder.query<any, {movie_id: any}>({
+      query: ({movie_id}) => ({
+        url: `movie/${movie_id}?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
   }),
 });
-export const {useMovieQuery, useUpcomingQuery, useNewReleaseQuery} = MovieApi;
+export const {
+  useMovieQuery,
+  useUpcomingQuery,
+  useNewReleaseQuery,
+  useMovieDetailsQuery,
+} = MovieApi;

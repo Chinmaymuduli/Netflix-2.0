@@ -1,10 +1,22 @@
-import React from 'react';
-import {Box, FlatList, Heading, Image, Pressable, Row, Text} from 'native-base';
+import React, {useState} from 'react';
+import {
+  Box,
+  FlatList,
+  Heading,
+  Image,
+  Pressable,
+  Row,
+  Text,
+  useDisclose,
+} from 'native-base';
 import {useUpcomingQuery} from '../services';
+import CustomActionSheet from './CustomActionSheet';
 
 const UpcomingMovie = () => {
   const {data, isFetching, error, isError} = useUpcomingQuery();
   // console.log(data);
+  const [showId, setShowId] = useState('');
+  const {isOpen, onOpen, onClose} = useDisclose();
   return (
     <Box pb={4}>
       <Heading size={'sm'} px={3} py={6} color={'white'}>
@@ -15,7 +27,7 @@ const UpcomingMovie = () => {
         showsHorizontalScrollIndicator={false}
         data={data?.results}
         renderItem={({item}: any) => (
-          <Pressable px={2}>
+          <Pressable px={2} onPress={() => setShowId(item?.id)}>
             <Row>
               <Image
                 source={{
@@ -32,6 +44,7 @@ const UpcomingMovie = () => {
           </Pressable>
         )}
       />
+      <CustomActionSheet onClose={onClose} isOpen={isOpen} Id={showId} />
     </Box>
   );
 };

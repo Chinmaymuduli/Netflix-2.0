@@ -28,9 +28,9 @@ import {
 } from '../../components';
 
 const HomeScreen = () => {
-  const [showId, setShowId] = useState('');
+  const [showId, setShowId] = useState();
   const {data, isFetching, error, isError} = useMovieQuery();
-  // console.log(data?.results);
+  // console.log({data});
   const {isOpen, onOpen, onClose} = useDisclose();
   return (
     <Box flex={1} bg={'black'}>

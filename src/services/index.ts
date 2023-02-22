@@ -3,6 +3,7 @@ import {
   useMovieQuery,
   useUpcomingQuery,
   useNewReleaseQuery,
+  useMovieDetailsQuery,
 } from './MovieApi';
 import {
   TvShows,
@@ -16,6 +17,7 @@ export {
   useMovieQuery,
   useUpcomingQuery,
   useNewReleaseQuery,
+  useMovieDetailsQuery,
   TvShows,
   useTvShowQuery,
   useTopRatedQuery,
