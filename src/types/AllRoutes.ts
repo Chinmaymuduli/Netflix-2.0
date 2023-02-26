@@ -4,7 +4,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 export type PrivateRoutesTypes = {
   HomeScreen?: undefined;
-  ScratchCard: undefined;
+  MovieDetailsScreen?: {
+    movie_id?: any;
+  };
 };
 export type PublicRoutesTypes = {
   LoginScreen?: undefined;

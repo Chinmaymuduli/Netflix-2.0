@@ -12,6 +12,8 @@ import {
 import {useMovieDetailsQuery} from '../services';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import {PrivateNavigationProps} from '../types/AllRoutes';
+import {useNavigation} from '@react-navigation/native';
 
 type Action_Type = {
   isOpen?: boolean;
@@ -20,6 +22,7 @@ type Action_Type = {
 };
 
 const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
+  const navigation = useNavigation<PrivateNavigationProps>();
   const {data, isFetching, error} = useMovieDetailsQuery({movie_id: Id});
   const [finalTime, setFinalTime] = useState<any>();
   console.log({data});
@@ -140,7 +143,11 @@ const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
             </VStack>
           </Row>
           <Divider mt={3} bg={'gray.500'} />
-          <Pressable>
+          <Pressable
+            onPress={() => {
+              onClose(),
+                navigation.navigate('MovieDetailsScreen', {movie_id: data?.id});
+            }}>
             <Row
               alignItems={'center'}
               justifyContent={'space-between'}

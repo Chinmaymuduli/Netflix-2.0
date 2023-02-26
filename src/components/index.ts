@@ -5,3 +5,5 @@ export {default as SliderMovie} from './SliderMovie';
 export {default as AiringTv} from './AiringTv';
 export {default as CustomActionSheet} from './CustomActionSheet';
 export {default as TvActionSheet} from './TvActionSheet';
+export {default as Header} from './Header';
+export {default as MoreMovie} from './MoreMovie';

@@ -32,6 +32,21 @@ export const MovieApi = createApi({
         url: `movie/${movie_id}?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
+    movieActors: builder.query<any, {movie_id: any}>({
+      query: ({movie_id}) => ({
+        url: `movie/${movie_id}/credits?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
+    similarMovie: builder.query<any, {movie_id: any}>({
+      query: ({movie_id}) => ({
+        url: `movie/${movie_id}/similar?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
+    getMovieVideo: builder.query<any, {movie_id: any}>({
+      query: ({movie_id}) => ({
+        url: `movie/${movie_id}/videos?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
   }),
 });
 export const {
@@ -39,4 +54,7 @@ export const {
   useUpcomingQuery,
   useNewReleaseQuery,
   useMovieDetailsQuery,
+  useMovieActorsQuery,
+  useSimilarMovieQuery,
+  useGetMovieVideoQuery,
 } = MovieApi;
