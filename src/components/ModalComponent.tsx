@@ -14,7 +14,7 @@ import {
   VStack,
 } from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useMovieActorsQuery} from '../services';
+import {useMovieActorsQuery, useTvStarDetailsQuery} from '../services';
 
 type ModalType = {
   fullModalVisible?: boolean;
@@ -37,6 +37,10 @@ const ModalComponent = ({
   const {data: ActorData, isFetching: actorFetching} = useMovieActorsQuery({
     movie_id: data?.id,
   });
+  const {data: ActorTvData, isFetching: actorTvFetching} =
+    useTvStarDetailsQuery({
+      tv_id: data?.id,
+    });
   useEffect(() => {
     const actors = ActorData?.cast.filter(
       (caster: {known_for_department: string}) =>
@@ -55,7 +59,25 @@ const ModalComponent = ({
     setDirector(director);
     setWriter(writing);
   }, [ActorData?.cast]);
-  console.log({data});
+  useEffect(() => {
+    const actors = ActorTvData?.cast.filter(
+      (caster: {known_for_department: string}) =>
+        caster?.known_for_department === 'Acting',
+    );
+    const director = ActorTvData?.cast.filter(
+      (caster: {known_for_department: string}) =>
+        caster?.known_for_department === 'Directing',
+    );
+    const writing = ActorTvData?.cast.filter(
+      (caster: {known_for_department: string}) =>
+        caster?.known_for_department === 'Writing',
+    );
+
+    setCaster(actors);
+    setDirector(director);
+    setWriter(writing);
+  }, [ActorTvData?.cast]);
+
   return (
     <Modal
       animationType="slide"
@@ -68,7 +90,7 @@ const ModalComponent = ({
         <View style={styles.modalView}>
           <Row justifyContent={'space-between'} alignItems={'center'}>
             <Text bold color={'white'} fontSize={16} w={'72'} noOfLines={2}>
-              {data?.original_title}
+              {data?.original_title || data?.original_name}
             </Text>
             <Pressable
               onPress={() => setFullModalVisible(false)}

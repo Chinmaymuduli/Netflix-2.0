@@ -7,6 +7,9 @@ export type PrivateRoutesTypes = {
   MovieDetailsScreen?: {
     movie_id?: any;
   };
+  TvAction: {
+    tv_id: any;
+  };
 };
 export type PublicRoutesTypes = {
   LoginScreen?: undefined;

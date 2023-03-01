@@ -12,6 +12,8 @@ import {
 import {useMovieDetailsQuery, useTvDetailsQuery} from '../services';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import {useNavigation} from '@react-navigation/native';
+import {PrivateNavigationProps} from '../types/AllRoutes';
 
 type Action_Type = {
   isOpen?: boolean;
@@ -20,6 +22,7 @@ type Action_Type = {
 };
 
 const TvActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
+  const navigation = useNavigation<PrivateNavigationProps>();
   const {data, isFetching, error} = useTvDetailsQuery({tv_id: Id});
   const [finalTime, setFinalTime] = useState<any>();
 
@@ -140,7 +143,8 @@ const TvActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
             </VStack>
           </Row>
           <Divider mt={3} bg={'gray.500'} />
-          <Pressable>
+          <Pressable
+            onPress={() => navigation.navigate('TvAction', {tv_id: Id})}>
             <Row
               alignItems={'center'}
               justifyContent={'space-between'}

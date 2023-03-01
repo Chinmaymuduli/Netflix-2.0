@@ -4,6 +4,9 @@ import {
   useMovieActorsQuery,
   useMovieDetailsQuery,
   useSimilarMovieQuery,
+  useTvDetailsQuery,
+  useTvStarDetailsQuery,
+  useTvVideoDetailsQuery,
 } from '../../services';
 import {
   Box,
@@ -31,29 +34,26 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import {Dimensions} from 'react-native';
 
-type DETAILS_PROPS = NativeStackScreenProps<
-  PrivateRoutesTypes,
-  'MovieDetailsScreen'
->;
-const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
-  const [movieId, setMovieId] = useState(params?.movie_id);
+type DETAILS_PROPS = NativeStackScreenProps<PrivateRoutesTypes, 'TvAction'>;
+const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
+  const [tvId, setTvId] = useState(params?.tv_id);
   const [showId, setShowId] = useState('');
   const [caster, setCaster] = useState<any[]>([]);
   const [director, setDirector] = useState<any[]>([]);
   const [videoKey, setVideoKey] = useState('');
   const [playing, setPlaying] = useState(true);
   const [fullModalVisible, setFullModalVisible] = useState(false);
-  const {data, isFetching, error} = useMovieDetailsQuery({
-    movie_id: movieId,
+  const {data, isFetching, error} = useTvDetailsQuery({
+    tv_id: tvId,
   });
-  const {data: ActorData, isFetching: actorFetching} = useMovieActorsQuery({
-    movie_id: movieId,
+  const {data: ActorData, isFetching: actorFetching} = useTvStarDetailsQuery({
+    tv_id: tvId,
   });
-  const {data: similarData, isFetching: similarFetching} = useSimilarMovieQuery(
-    {
-      movie_id: movieId,
-    },
-  );
+  //   const {data: similarData, isFetching: similarFetching} = useSimilarMovieQuery(
+  //     {
+  //       movie_id: tvId,
+  //     },
+  //   );
   useEffect(() => {
     const actors = ActorData?.cast.filter(
       (caster: {known_for_department: string}) =>
@@ -80,13 +80,13 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
     data: videoData,
     isFetching: videoFetching,
     isLoading: VideoLoading,
-  } = useGetMovieVideoQuery({
-    movie_id: movieId,
+  } = useTvVideoDetailsQuery({
+    tv_id: tvId,
   });
 
   useEffect(() => {
     const video = videoData?.results?.find(
-      (item: {name: string}) => item?.name === 'Official Trailer',
+      (item: {type: string}) => item?.type === 'Trailer',
     );
     setVideoKey(video?.key);
   }, [videoData?.results]);
@@ -102,6 +102,8 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
       setPlaying(false);
     }
   }, []);
+
+  console.log({ActorData});
 
   return (
     <Box flex={1} bg={'black'}>
@@ -128,11 +130,11 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
         <VStack space={2}>
           <VStack px={2} space={1}>
             <Text bold fontSize={20} color={'white'}>
-              {data?.original_title}
+              {data?.original_name}
             </Text>
             <Row space={4} mt={1}>
               <Text color={'gray.300'} fontSize={13} fontWeight={'medium'}>
-                {new Date(data?.release_date).getFullYear()}
+                {new Date(data?.first_air_date).getFullYear()}
               </Text>
               <Box bg={'gray.500'} borderRadius={7}>
                 <Text
@@ -144,7 +146,7 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 </Text>
               </Box>
               <Text fontWeight={'medium'} color={'gray.300'} fontSize={13}>
-                {finalTime}
+                {data?.seasons?.length} session
               </Text>
             </Row>
           </VStack>
@@ -179,18 +181,19 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 <Box>
                   <Text color={'white'} fontWeight={'medium'} fontSize={12}>
                     Starring :{' '}
-                    {caster?.[0]?.name +
-                      caster?.[1]?.name +
-                      caster?.[2]?.name +
-                      caster?.[3]?.name}
+                    {
+                      caster?.[0]?.name + caster?.[1]?.name
+                      //   caster?.[2]?.name +
+                      //   caster?.[3]?.name
+                    }
                     ....
                   </Text>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Text color={'white'} fontWeight={'medium'} fontSize={12}>
                     Director : {director?.[0]?.name}
                   </Text>
-                </Box>
+                </Box> */}
               </VStack>
             </Pressable>
           </VStack>
@@ -257,7 +260,7 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
               ))}
             </Row>
           </VStack> */}
-          <MoreMovie movieId={movieId} />
+          {/* <MoreMovie movieId={movieId} /> */}
         </VStack>
       </ScrollView>
       {/* ActionSheet */}
@@ -271,4 +274,4 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
   );
 };
 
-export default MovieDetailsScreen;
+export default TvAction;

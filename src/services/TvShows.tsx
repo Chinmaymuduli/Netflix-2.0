@@ -32,6 +32,16 @@ export const TvShows = createApi({
         url: `tv/${tv_id}?api_key=${MOVIE_API_KEYS}&language=en-US`,
       }),
     }),
+    TvVideoDetails: builder.query<any, {tv_id: any}>({
+      query: ({tv_id}) => ({
+        url: `tv/${tv_id}/videos?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
+    TvStarDetails: builder.query<any, {tv_id: any}>({
+      query: ({tv_id}) => ({
+        url: `tv/${tv_id}/credits?api_key=${MOVIE_API_KEYS}&language=en-US`,
+      }),
+    }),
   }),
 });
 export const {
@@ -39,4 +49,6 @@ export const {
   useTopRatedQuery,
   useAiringTodayQuery,
   useTvDetailsQuery,
+  useTvVideoDetailsQuery,
+  useTvStarDetailsQuery,
 } = TvShows;

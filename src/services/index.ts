@@ -14,6 +14,8 @@ import {
   useTopRatedQuery,
   useAiringTodayQuery,
   useTvDetailsQuery,
+  useTvVideoDetailsQuery,
+  useTvStarDetailsQuery,
 } from './TvShows';
 
 export {
@@ -30,4 +32,6 @@ export {
   useTopRatedQuery,
   useAiringTodayQuery,
   useTvDetailsQuery,
+  useTvVideoDetailsQuery,
+  useTvStarDetailsQuery,
 };
