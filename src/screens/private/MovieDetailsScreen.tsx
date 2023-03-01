@@ -18,7 +18,12 @@ import {
   useDisclose,
   VStack,
 } from 'native-base';
-import {CustomActionSheet, Header, MoreMovie} from '../../components';
+import {
+  CustomActionSheet,
+  Header,
+  ModalComponent,
+  MoreMovie,
+} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {PrivateRoutesTypes} from '../../types/AllRoutes';
@@ -37,6 +42,7 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
   const [director, setDirector] = useState<any[]>([]);
   const [videoKey, setVideoKey] = useState('');
   const [playing, setPlaying] = useState(true);
+  const [fullModalVisible, setFullModalVisible] = useState(false);
   const {data, isFetching, error} = useMovieDetailsQuery({
     movie_id: movieId,
   });
@@ -97,7 +103,8 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
     }
   }, []);
 
-  console.log({videoData});
+  console.log({movieId});
+
   return (
     <Box flex={1} bg={'black'}>
       <Header />
@@ -145,12 +152,13 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
           </VStack>
           <Box px={2} mt={2}>
             <Button
+              onPress={() => setPlaying(true)}
               leftIcon={
                 <Icon as={Ionicons} name="play" size="lg" color={'black'} />
               }
               bgColor={'white'}>
               <Text bold color={'black'}>
-                Play
+                {playing ? 'Pause' : 'Play'}
               </Text>
             </Button>
           </Box>
@@ -163,7 +171,7 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 {data?.overview}
               </Text>
             </VStack>
-            <Pressable mt={2}>
+            <Pressable mt={2} onPress={() => setFullModalVisible(true)}>
               <VStack>
                 <Box>
                   <Text color={'white'} fontWeight={'medium'} fontSize={12}>
@@ -177,7 +185,7 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 </Box>
                 <Box>
                   <Text color={'white'} fontWeight={'medium'} fontSize={12}>
-                    Director : {caster?.[0]?.name}
+                    Director : {director?.[0]?.name}
                   </Text>
                 </Box>
               </VStack>
@@ -250,7 +258,12 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
         </VStack>
       </ScrollView>
       {/* ActionSheet */}
-      <CustomActionSheet onClose={onClose} isOpen={isOpen} Id={showId} />
+      {/* <CustomActionSheet onClose={onClose} isOpen={isOpen} Id={showId} /> */}
+      <ModalComponent
+        setFullModalVisible={setFullModalVisible}
+        fullModalVisible={fullModalVisible}
+        data={data}
+      />
     </Box>
   );
 };

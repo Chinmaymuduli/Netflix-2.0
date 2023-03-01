@@ -147,6 +147,16 @@ const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
             onPress={() => {
               onClose(),
                 navigation.navigate('MovieDetailsScreen', {movie_id: data?.id});
+              //   navigation.push('MovieDetailsScreen', {movie_id: data?.id});
+              // // navigation.reset({
+              //   index: 1,
+              //   routes: [
+              //     {
+              //       name: 'HomeScreen',
+              //     },
+              //     {name: 'MovieDetailsScreen', params: {movie_id: data?.id}},
+              //   ],
+              // });
             }}>
             <Row
               alignItems={'center'}
