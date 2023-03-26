@@ -1,9 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
-  useGetMovieVideoQuery,
-  useMovieActorsQuery,
-  useMovieDetailsQuery,
-  useSimilarMovieQuery,
+  useSimilarTvShowQuery,
   useTvDetailsQuery,
   useTvStarDetailsQuery,
   useTvVideoDetailsQuery,
@@ -21,16 +18,12 @@ import {
   useDisclose,
   VStack,
 } from 'native-base';
-import {
-  CustomActionSheet,
-  Header,
-  ModalComponent,
-  MoreMovie,
-} from '../../components';
+import {Header, ModalComponent} from '../../components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {PrivateRoutesTypes} from '../../types/AllRoutes';
 import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import {Dimensions} from 'react-native';
 
@@ -41,7 +34,7 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
   const [caster, setCaster] = useState<any[]>([]);
   const [director, setDirector] = useState<any[]>([]);
   const [videoKey, setVideoKey] = useState('');
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [fullModalVisible, setFullModalVisible] = useState(false);
   const {data, isFetching, error} = useTvDetailsQuery({
     tv_id: tvId,
@@ -49,11 +42,7 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
   const {data: ActorData, isFetching: actorFetching} = useTvStarDetailsQuery({
     tv_id: tvId,
   });
-  //   const {data: similarData, isFetching: similarFetching} = useSimilarMovieQuery(
-  //     {
-  //       movie_id: tvId,
-  //     },
-  //   );
+
   useEffect(() => {
     const actors = ActorData?.cast.filter(
       (caster: {known_for_department: string}) =>
@@ -83,6 +72,13 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
   } = useTvVideoDetailsQuery({
     tv_id: tvId,
   });
+  const {
+    data: similarData,
+    isFetching: similarFetching,
+    isLoading: similarLoading,
+  } = useSimilarTvShowQuery({
+    tv_id: tvId,
+  });
 
   useEffect(() => {
     const video = videoData?.results?.find(
@@ -92,6 +88,7 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
   }, [videoData?.results]);
 
   const onStateChanged = useCallback((state: string) => {
+    console.log({state});
     if (state === 'ended') {
       setPlaying(false);
     }
@@ -102,8 +99,6 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
       setPlaying(false);
     }
   }, []);
-
-  console.log({ActorData});
 
   return (
     <Box flex={1} bg={'black'}>
@@ -122,7 +117,18 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 onChangeState={onStateChanged}
               />
             ) : (
-              <Text>Video Not Available</Text>
+              <Box
+                h={'40'}
+                borderWidth={1}
+                borderColor={'gray.700'}
+                borderRadius={8}
+                justifyContent={'center'}
+                alignItems={'center'}>
+                <AntDesign name="youtube" color={'red'} size={30} />
+                <Text fontWeight={'semibold'} color={'white'}>
+                  Video Not Available
+                </Text>
+              </Box>
             )}
           </Box>
         )}
@@ -227,7 +233,7 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
               </Text>
             </VStack>
           </Row>
-          {/* <VStack space={3} mt={3}>
+          <VStack space={3} mt={3}>
             <VStack px={3}>
               <Text bold color={'white'}>
                 More Like This
@@ -237,9 +243,9 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
             <Row flexWrap={'wrap'} px={1}>
               {similarData?.results?.map((item: any) => (
                 <Pressable
-                  onPress={() => {
-                    onOpen(), setShowId(item?.id);
-                  }}
+                  // onPress={() => {
+                  //   onOpen(), setShowId(item?.id);
+                  // }}
                   key={item?.id}
                   m={1.5}>
                   <Box>
@@ -259,7 +265,7 @@ const TvAction = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 </Pressable>
               ))}
             </Row>
-          </VStack> */}
+          </VStack>
           {/* <MoreMovie movieId={movieId} /> */}
         </VStack>
       </ScrollView>

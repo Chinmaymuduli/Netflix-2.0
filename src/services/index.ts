@@ -16,6 +16,7 @@ import {
   useTvDetailsQuery,
   useTvVideoDetailsQuery,
   useTvStarDetailsQuery,
+  useSimilarTvShowQuery,
 } from './TvShows';
 
 export {
@@ -34,4 +35,5 @@ export {
   useTvDetailsQuery,
   useTvVideoDetailsQuery,
   useTvStarDetailsQuery,
+  useSimilarTvShowQuery,
 };

@@ -93,14 +93,17 @@ const TvActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
             </Pressable>
           </Row>
           <Row px={7} justifyContent={'space-between'} mt={5}>
-            <VStack alignItems={'center'} space={1}>
-              <Box bg={'white'} p={2} alignItems={'center'} borderRadius={30}>
-                <Ionicons name="play" size={21} color={'black'} />
-              </Box>
-              <Text fontWeight={'medium'} color={'gray.300'} fontSize={11}>
-                Play
-              </Text>
-            </VStack>
+            <Pressable
+              onPress={() => navigation.navigate('TvAction', {tv_id: Id})}>
+              <VStack alignItems={'center'} space={1}>
+                <Box bg={'white'} p={2} alignItems={'center'} borderRadius={30}>
+                  <Ionicons name="play" size={21} color={'black'} />
+                </Box>
+                <Text fontWeight={'medium'} color={'gray.300'} fontSize={11}>
+                  Play
+                </Text>
+              </VStack>
+            </Pressable>
             <VStack alignItems={'center'} space={1}>
               <Box
                 bg={'gray.500'}

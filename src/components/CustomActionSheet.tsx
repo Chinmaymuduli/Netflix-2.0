@@ -14,6 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
 import {PrivateNavigationProps} from '../types/AllRoutes';
 import {useNavigation} from '@react-navigation/native';
+import {useAppContext} from '../contexts';
 
 type Action_Type = {
   isOpen?: boolean;
@@ -23,7 +24,8 @@ type Action_Type = {
 
 const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
   const navigation = useNavigation<PrivateNavigationProps>();
-  const {data, isFetching, error} = useMovieDetailsQuery({movie_id: Id});
+  const {setLikeData, setMyListData, myListData, likeData} = useAppContext();
+  const {data} = useMovieDetailsQuery({movie_id: Id});
   const [finalTime, setFinalTime] = useState<any>();
   console.log({data});
   useEffect(() => {
@@ -93,14 +95,22 @@ const CustomActionSheet = ({isOpen, onClose, Id}: Action_Type) => {
             </Pressable>
           </Row>
           <Row px={7} justifyContent={'space-between'} mt={5}>
-            <VStack alignItems={'center'} space={1}>
-              <Box bg={'white'} p={2} alignItems={'center'} borderRadius={30}>
-                <Ionicons name="play" size={21} color={'black'} />
-              </Box>
-              <Text fontWeight={'medium'} color={'gray.300'} fontSize={11}>
-                Play
-              </Text>
-            </VStack>
+            <Pressable
+              onPress={() => {
+                onClose(),
+                  navigation.navigate('MovieDetailsScreen', {
+                    movie_id: data?.id,
+                  });
+              }}>
+              <VStack alignItems={'center'} space={1}>
+                <Box bg={'white'} p={2} alignItems={'center'} borderRadius={30}>
+                  <Ionicons name="play" size={21} color={'black'} />
+                </Box>
+                <Text fontWeight={'medium'} color={'gray.300'} fontSize={11}>
+                  Play
+                </Text>
+              </VStack>
+            </Pressable>
             <VStack alignItems={'center'} space={1}>
               <Box
                 bg={'gray.500'}

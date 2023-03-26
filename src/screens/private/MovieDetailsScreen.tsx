@@ -30,6 +30,7 @@ import {PrivateRoutesTypes} from '../../types/AllRoutes';
 import Entypo from 'react-native-vector-icons/Entypo';
 import YoutubeIframe from 'react-native-youtube-iframe';
 import {Dimensions} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 type DETAILS_PROPS = NativeStackScreenProps<
   PrivateRoutesTypes,
@@ -120,7 +121,18 @@ const MovieDetailsScreen = ({route: {params}, navigation}: DETAILS_PROPS) => {
                 onChangeState={onStateChanged}
               />
             ) : (
-              <Text>Video Not Available</Text>
+              <Box
+                h={'40'}
+                borderWidth={1}
+                borderColor={'gray.700'}
+                borderRadius={8}
+                justifyContent={'center'}
+                alignItems={'center'}>
+                <AntDesign name="youtube" color={'red'} size={30} />
+                <Text fontWeight={'semibold'} color={'white'}>
+                  Video Not Available
+                </Text>
+              </Box>
             )}
           </Box>
         )}

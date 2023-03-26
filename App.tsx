@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import CustomTheme from './src/styles';
 import {Provider} from 'react-redux';
 import {store} from './src/app/store';
+import {AppContextProvider} from './src/contexts';
 
 const App = () => {
   return (
@@ -12,7 +13,9 @@ const App = () => {
       <NavigationContainer>
         <NativeBaseProvider theme={CustomTheme}>
           {/* <StatusBar backgroundColor={'red'} /> */}
-          <Routes />
+          <AppContextProvider>
+            <Routes />
+          </AppContextProvider>
         </NativeBaseProvider>
       </NavigationContainer>
     </Provider>
