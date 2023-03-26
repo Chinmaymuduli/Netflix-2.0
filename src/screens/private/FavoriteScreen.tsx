@@ -1,9 +1,11 @@
 import React from 'react';
-import {Box, Image, Row} from 'native-base';
+import {Box, Image, Pressable, Row, ScrollView} from 'native-base';
 import {IMAGES} from '../../assets';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useMovieQuery} from '../../services';
 
 const FavoriteScreen = () => {
+  const {data, isFetching, error, isError} = useMovieQuery();
   return (
     <Box flex={1} bg={'black'}>
       <Box>
@@ -37,6 +39,32 @@ const FavoriteScreen = () => {
           </Row>
         </Row>
       </Box>
+      <ScrollView>
+        <Row flexWrap={'wrap'} px={1}>
+          {data?.results?.map((item: any) => (
+            <Pressable
+              // onPress={() => {
+              //   onOpen(), setShowId(item?.id);
+              // }}
+              key={item?.id}
+              m={1.5}>
+              <Box>
+                <Image
+                  source={{
+                    uri: 'https://image.tmdb.org/t/p/w500' + item?.poster_path,
+                  }}
+                  style={{
+                    height: 130,
+                    width: 105,
+                  }}
+                  alt="poster"
+                  borderRadius={7}
+                />
+              </Box>
+            </Pressable>
+          ))}
+        </Row>
+      </ScrollView>
     </Box>
   );
 };
